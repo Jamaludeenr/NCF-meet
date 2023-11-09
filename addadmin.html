@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include the Firebase library directly from the official Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <link rel="stylesheet" type="text/css" href="Proprietor.css">
+</head>
+<body>
+    <div class="background">
+        <div class="logo">
+            <img src="logo.png">
+        </div>
+    </div>
+
+    <div class="container">
+        <label for="userID"><h2>Wallet Address:</h2></label>
+        <input type="text" name="userID" id="userID" placeholder="Enter your Address" style="height: 30px; width: 100%; border-color: black; border-width: 5px;" required><br>
+
+        <div class="buttons">
+            <button id="showPopupBtn" class="join-button">Add Admin</button><br>
+            <button id="backbutton" class="join-button">Back</button>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAeKo2LsvFJvz_5cFYBwJQWqGGDrd73zaA",
+            authDomain: "ncf-auth.firebaseapp.com",
+            databaseURL: "https://ncf-auth-default-rtdb.firebaseio.com",
+            projectId: "ncf-auth",
+            storageBucket: "ncf-auth.appspot.com",
+            messagingSenderId: "507271869782",
+            appId: "1:507271869782:web:995e3299d0924b3d18d2f7",
+            measurementId: "G-LG3149FZHG"
+        };
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+        const showPopupBtn = document.getElementById('showPopupBtn');
+        const userIDInput = document.getElementById('userID');
+
+        showPopupBtn.addEventListener('click', function() {
+            const walletAddress = userIDInput.value;
+
+            // Create a reference to the Firebase database where you want to store the wallet addresses.
+            const database = firebaseApp.database();
+            const addressesRef = database.ref('Admin');
+
+            // Push the wallet address to the database.
+            addressesRef.child(walletAddress).set(true, (error) => {
+                if (error) {
+                    alert('Error: Could not add wallet address to the database.');
+                } else {
+                    alert('Admin added Successfully');
+                }
+            });
+        });
+
+        document.getElementById('backbutton').addEventListener('click', function(){
+            window.location.href = "propauth.html";
+        });
+    </script>
+</body>
+</html>
